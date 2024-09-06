@@ -1,0 +1,55 @@
+---
+title: "Control Flow and Function Writing"
+format: html
+editor: visual
+---
+
+For Homework 3, we will be continuing the example in our last homework assignment. This file $hw2_list.rda$ is located in the working directory and is loaded in to work with in this assignment.
+
+```{r}
+load("hw2_list.rda")
+```
+
+# Task 1: Control Flow Practice
+
+1. Suppose we want to characterize the post-treatment (or placebo) blood pressure measurement as optimal (≤ 120), borderline (120 < bp ≤ 130), and high (> 130). 
+
+First, create a new column in each data frame from above called status. You can do this via
+
+your_df$status <- character(20) #or 10 depending on number of observations
+
+Note: You want to do this additional column to the data frames that are stored in your list not the original data frames you had in your environment. Although R uses smart ways to avoid using excess memory, it doesn’t overwrite the data frame stored in your list if you modify the original object.
+
+
+```{r}
+bp_list$treatment$status <- character(20)
+bp_list$placebo$status <- character(10)
+```
+
+
+2. For the non-placebo data frame (within the list), create a for loop and use if/then/else logic to create the status column’s values.
+
+
+```{r}
+for(i in seq_len(nrow(bp_list$treatment)){
+  if(bp_list$treatment$post_bp[i] > 130){
+      bp_list$treatment$status[i] == "high"
+  } else if (bp_list$treatment$post_bp[i]){
+      bp_list$treatment$status[i] == "borderline"
+  } else if (bp_list$treatment$post_bp[i]){
+      bp_list$treatment$status[i] == "optimal"
+  } else {
+      bp_list$treatment$status[i] == "Error"
+  }
+}
+```
+
+
+```{r}
+bp_list$treatment$status <- ifelse(bp_list$treatment$post_bp > 130, "high",
+                           ifelse(bp_list$treatment$post_bp > 120, "borderline", "optimal"))
+```
+
+
+
+
