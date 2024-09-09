@@ -29,27 +29,38 @@ bp_list$placebo$status <- character(10)
 
 2. For the non-placebo data frame (within the list), create a for loop and use if/then/else logic to create the status column’s values.
 
+For the for loop we are examining each subject's post-treatment blood pressure (post_bp) and based on that value assigning the subject a status. To do this we can loop through the number of subjects and run each subject through the if/then/else logic.
 
 ```{r}
-for(i in seq_len(nrow(bp_list$treatment)){
+for (i in seq_len(nrow(bp_list$treatment))){
   if(bp_list$treatment$post_bp[i] > 130){
-      bp_list$treatment$status[i] == "high"
+      bp_list$treatment$status[i] <- "high"
   } else if (bp_list$treatment$post_bp[i]){
-      bp_list$treatment$status[i] == "borderline"
+      bp_list$treatment$status[i] <- "borderline"
   } else if (bp_list$treatment$post_bp[i]){
-      bp_list$treatment$status[i] == "optimal"
+      bp_list$treatment$status[i] <- "optimal"
   } else {
-      bp_list$treatment$status[i] == "Error"
+      bp_list$treatment$status[i] <- "Error"
+  }
+}
+# Side note from office hours: use <- inside the assignment statements. My original use of == is only used for comparison sakes.
+```
+
+3. Repeat for the placebo data frame (within the list).
+
+```{r}
+for (i in seq_len(nrow(bp_list$placebo))){
+  if(bp_list$placebo$post_bp[i] > 130){
+      bp_list$treatment$status[i] <- "high"
+  } else if (bp_list$placebo$post_bp[i]){
+      bp_list$placebo$status[i] <- "borderline"
+  } else if (bp_list$treatment$post_bp[i]){
+      bp_list$placebo$status[i] <- "optimal"
+  } else {
+      bp_list$placebo$status[i] <- "Error"
   }
 }
 ```
 
-
-```{r}
-bp_list$treatment$status <- ifelse(bp_list$treatment$post_bp > 130, "high",
-                           ifelse(bp_list$treatment$post_bp > 120, "borderline", "optimal"))
-```
-
-
-
+# Task 2: Function Writing
 
